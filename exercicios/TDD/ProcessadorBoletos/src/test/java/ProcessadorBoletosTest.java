@@ -27,14 +27,32 @@ public class ProcessadorBoletosTest {
         Fatura fatura = new Fatura(data,1500,"Diego");
         ProcessadorBoletos processadorBoletos = new ProcessadorBoletos(fatura);
         Boleto boleto1 = new Boleto(data,500,1);
-        Boleto boleto2 = new Boleto(data,400,1);
-        Boleto boleto3 = new Boleto(data,600,1);
+        Boleto boleto2 = new Boleto(data,400,2);
+        Boleto boleto3 = new Boleto(data,600,3);
         List<Boleto> boletos = new ArrayList<>();
         boletos.add(boleto1);
         boletos.add(boleto2);
         boletos.add(boleto3);
         processadorBoletos.processarBoletos(boletos);
         assertTrue(fatura.isPago());
+    }
+
+    @Test
+    public void testAdicionaBoletosNaoPagouFatura(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataString = "01/01/2021";       
+        LocalDate data = LocalDate.parse(dataString, formatter);
+        Fatura fatura = new Fatura(data,12345,"Adrian");
+        ProcessadorBoletos processadorBoletos = new ProcessadorBoletos(fatura);
+        Boleto boleto1 = new Boleto(data,2,1);
+        Boleto boleto2 = new Boleto(data,3,2);
+        Boleto boleto3 = new Boleto(data,40,3);
+        List<Boleto> boletos = new ArrayList<>();
+        boletos.add(boleto1);
+        boletos.add(boleto2);
+        boletos.add(boleto3);
+        processadorBoletos.processarBoletos(boletos);
+        assertFalse(fatura.isPago());
     }
     
 }
