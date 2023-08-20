@@ -57,6 +57,7 @@ public class GerenciadorDeTarefasTest {
     public void testTarefaEditada() {
         Usuario user = new Usuario("User3");
         Tarefa tarefa = new Tarefa("Fazer exercicio de VeV", "Exercicio TDD", "25/09/2023", "Media", "5");
+        user.addTarefa(tarefa);
         user.editTarefa("Fazer exercicio de VeV hoje", "Exercicio TDD", "25/09/2023", "Alta", "5");
         assertEquals("Alta", tarefa.getPrioridade());
         assertEquals("Fazer exercicio de VeV hoje", tarefa.getTitulo());
@@ -65,7 +66,7 @@ public class GerenciadorDeTarefasTest {
     @Test
     public void testListagemPorPrioridadeEValidade() {
         Usuario user = new Usuario("User4");
-        Tarefa tarefa1 = new Tarefa("Fazer exercicio de BD", "Exercicio Diagrama", "25/09/2023", "Media", "6");
+        Tarefa tarefa1 = new Tarefa("Fazer exercicio de BD", "Exercicio Diagrama", "25/10/2023", "Media", "6");
         Tarefa tarefa2 = new Tarefa("Fazer exercicio de VeV", "Exercicio TDD", "25/10/2023", "Alta", "7");
         user.addTarefa(tarefa1);
         user.addTarefa(tarefa2);
