@@ -30,7 +30,7 @@ public class Fatura {
         return this.valorPago;
     }
 
-    public void setPago(double valorPago){
+    public void setValorPago(double valorPago){
         this.valorPago = valorPago;
     }
 
