@@ -22,4 +22,8 @@ public class ProcessadorBoletos {
         this.fatura.setValorPago(valorPago+valorBoletos);
     }
 
+    public List<Boleto> getPagamentos(){
+        return this.pagamentos;
+    }
+
 }
