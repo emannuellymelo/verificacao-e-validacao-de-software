@@ -1,4 +1,6 @@
 import org.junit.Test;
+import br.com.ufcg.model.Fatura;
+import br.com.ufcg.model.ProcessadorBoletos;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
