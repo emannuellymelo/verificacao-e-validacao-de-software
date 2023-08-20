@@ -1,4 +1,6 @@
 package br.com.ufcg;
+import br.com.ufcg.gerenciador.Tarefa;
+import br.com.ufcg.gerenciador.Usuario;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

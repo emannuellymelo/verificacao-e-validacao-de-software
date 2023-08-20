@@ -1,8 +1,7 @@
-package br.com.ufcg;
+package br.com.ufcg.gerenciador;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Usuario {
 
@@ -24,7 +23,7 @@ public class Usuario {
                 t.setTitulo(titulo);
                 t.setDescricao(descricao);
                 t.setPrioridade(prioridade);
-                t.setValidade(validade);
+                t.setVencimento(validade);
             }
         }
     }
