@@ -5,12 +5,12 @@ import java.time.LocalDate;
 public class Boleto extends Pagamento{
     private long codigo;
     
-    public Boleto(LocalDate data, double valor, String tipoPagamento, long codigo){
-        super(data,valor,tipoPagamento);
+    public Boleto(LocalDate data, double valor, long codigo){
+        super(data,valor);
         this.codigo = codigo;
     }
     public long getCodigo(){
-        return codigo;
+        return this.codigo;
     }
     
 }

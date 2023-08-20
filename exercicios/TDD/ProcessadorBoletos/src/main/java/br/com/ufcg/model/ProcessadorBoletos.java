@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class ProcessadorBoletos {
     private Fatura fatura;
-    private List<Pagamento> pagamentos;
+    private List<Boleto> pagamentos;
 
     public ProcessadorBoletos(Fatura fatura){
         this.fatura = fatura;
         this.pagamentos = new ArrayList<>();
     }
-    
+
 }

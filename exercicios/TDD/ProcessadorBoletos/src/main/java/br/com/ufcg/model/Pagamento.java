@@ -6,21 +6,24 @@ public abstract class Pagamento {
     private double valor;
     private String tipoPagamento;
 
-    public Pagamento(LocalDate data, double valor, String tipoPagamento){
+    public Pagamento(LocalDate data, double valor){
         this.data = data;
         this.valor = valor;
-        this.tipoPagamento = tipoPagamento;
     }
 
     public double getValor(){
-        return valor;
+        return this.valor;
     }
 
     public LocalDate getData(){
-        return data;
+        return this.data;
     }
 
     public String getTipoPagamento(){
-        return tipoPagamento;
+        return this.tipoPagamento;
+    }
+
+    public void setTipoPagamento(String tipoPagamento){
+        this.tipoPagamento = tipoPagamento;
     }
 }
