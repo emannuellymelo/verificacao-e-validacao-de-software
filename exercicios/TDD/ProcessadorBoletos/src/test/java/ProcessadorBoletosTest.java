@@ -54,5 +54,34 @@ public class ProcessadorBoletosTest {
         processadorBoletos.processarBoletos(boletos);
         assertFalse(fatura.isPago());
     }
+
+    @Test
+    public void testAdicionaBoletosVerificaPropriedades(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataString = "01/01/2021";       
+        LocalDate data = LocalDate.parse(dataString, formatter);
+        Fatura fatura = new Fatura(data,12345,"Adrian");
+        ProcessadorBoletos processadorBoletos = new ProcessadorBoletos(fatura);
+        Boleto boleto1 = new Boleto(data,100,1);
+        Boleto boleto2 = new Boleto(data,200,2);
+        Boleto boleto3 = new Boleto(data,200,3);
+        Boleto boleto4 = new Boleto(data,300,4);
+        List<Boleto> boletos = new ArrayList<>();
+        boletos.add(boleto1);
+        boletos.add(boleto2);
+        boletos.add(boleto3);
+        boletos.add(boleto4);
+        processadorBoletos.processarBoletos(boletos);
+        boolean tiposCorretos = true;
+        List<Boleto> pagamentos = processadorBoletos.getPagamentos();
+        assertTrue(pagamentos.size() == 4);
+        for(Boleto boleto : pagamentos){
+            if(boleto.getTipoPagamento() != "BOLETO"){
+                tiposCorretos = false;
+                break;
+            }
+        }
+        assertTrue(tiposCorretos);
+    }
     
 }
