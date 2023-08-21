@@ -66,10 +66,20 @@ public class GerenciadorDeTarefasTest {
     }
 
     @Test
-    public void testListagemPorPrioridadeEValidade() {
+    public void testListagemMesmaDataPrioridadesDiferentes() {
         Usuario user = new Usuario("User4");
         Tarefa tarefa1 = new Tarefa("Fazer exercicio de BD", "Exercicio Diagrama", "25/10/2023", "Media", "6");
         Tarefa tarefa2 = new Tarefa("Fazer exercicio de VeV", "Exercicio TDD", "25/10/2023", "Alta", "7");
+        user.addTarefa(tarefa1);
+        user.addTarefa(tarefa2);
+        assertEquals( "Fazer exercicio de VeV", user.getTarefas().get(0).getTitulo());
+    }
+
+    @Test
+    public void testListagemMesmaPrioridadeDatasDiferentes() {
+        Usuario user = new Usuario("User5");
+        Tarefa tarefa1 = new Tarefa("Fazer exercicio de BD", "Exercicio Diagrama", "25/10/2023", "Media", "8");
+        Tarefa tarefa2 = new Tarefa("Fazer exercicio de VeV", "Exercicio TDD", "08/10/2023", "Media", "9");
         user.addTarefa(tarefa1);
         user.addTarefa(tarefa2);
         assertEquals( "Fazer exercicio de VeV", user.getTarefas().get(0).getTitulo());
