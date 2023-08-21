@@ -2,6 +2,7 @@ import org.junit.Test;
 import br.com.ufcg.model.Fatura;
 import br.com.ufcg.model.ProcessadorBoletos;
 import br.com.ufcg.model.Boleto;
+import br.com.ufcg.model.TipoPagamento;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -76,7 +77,7 @@ public class ProcessadorBoletosTest {
         List<Boleto> pagamentos = processadorBoletos.getPagamentos();
         assertTrue(pagamentos.size() == 4);
         for(Boleto boleto : pagamentos){
-            if(boleto.getTipoPagamento() != "BOLETO"){
+            if(!boleto.getTipoPagamento().equals(TipoPagamento.BOLETO)){
                 tiposCorretos = false;
                 break;
             }

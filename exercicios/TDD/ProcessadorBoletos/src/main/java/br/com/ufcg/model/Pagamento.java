@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public abstract class Pagamento {
     private LocalDate data;
     private double valor;
-    private String tipoPagamento;
+    private TipoPagamento tipoPagamento;
 
     public Pagamento(LocalDate data, double valor){
         this.data = data;
@@ -19,11 +19,11 @@ public abstract class Pagamento {
         return this.data;
     }
 
-    public String getTipoPagamento(){
+    public TipoPagamento getTipoPagamento(){
         return this.tipoPagamento;
     }
 
-    public void setTipoPagamento(String tipoPagamento){
+    public void setTipoPagamento(TipoPagamento tipoPagamento){
         this.tipoPagamento = tipoPagamento;
     }
 }

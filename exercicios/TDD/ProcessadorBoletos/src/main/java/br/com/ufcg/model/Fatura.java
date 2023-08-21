@@ -6,12 +6,14 @@ public class Fatura {
     private double valor;
     private double valorPago;
     private String nomeCliente;
+    private String status;
 
     public Fatura(LocalDate data, double valor, String nomeCliente){
         this.data = data;
         this.valor = valor;
         this.nomeCliente = nomeCliente;
         this.valorPago = 0;
+        this.status = "NAO_PAGA";
     }
  
     public LocalDate getData(){
@@ -35,6 +37,14 @@ public class Fatura {
     }
 
     public boolean isPago(){
-        return valorPago >= valor;
+        return this.status.equals("PAGA");
+    }
+
+    public String getStatus(){
+        return this.status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 }

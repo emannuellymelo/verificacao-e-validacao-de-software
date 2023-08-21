@@ -15,11 +15,14 @@ public class ProcessadorBoletos {
         double valorPago = this.fatura.getValorPago();
         double valorBoletos = 0;
         for(Boleto boleto: boletos){
-            boleto.setTipoPagamento("BOLETO");
+            boleto.setTipoPagamento(TipoPagamento.BOLETO);
             this.pagamentos.add(boleto);
             valorBoletos += boleto.getValor();
         }
         this.fatura.setValorPago(valorPago+valorBoletos);
+        if(fatura.getValorPago() >= fatura.getValor()){
+            fatura.setStatus("PAGA");
+        }
     }
 
     public List<Boleto> getPagamentos(){
