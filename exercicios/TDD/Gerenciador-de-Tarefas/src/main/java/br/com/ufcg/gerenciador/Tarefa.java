@@ -20,6 +20,16 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
+    public Tarefa(String titulo, String descricao, String vencimento, String prioridade) {
+        double randomDoubleNumber = Math.random();
+        int randomIntNumber = (int) (randomDoubleNumber * 100);
+        String codigo = Integer.toString(randomIntNumber);
+        this.checkTituloECodigo(titulo, codigo);
+        this.checkPrioridade(prioridade);
+        this.checkVencimento(vencimento);
+        this.descricao = descricao;
+    }
+
     private void checkTituloECodigo(String titulo, String codigo) {
         String mensagemTituloInvalido = "Titulo Invalido! Atribua um titulo para sua tarefa.";
         String mensagemCodigoInvalido = "Codigo Invalido! Atribua um codigo para sua tarefa";
