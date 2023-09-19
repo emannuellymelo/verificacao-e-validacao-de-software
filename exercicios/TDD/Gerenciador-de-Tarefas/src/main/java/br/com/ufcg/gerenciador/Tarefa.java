@@ -13,33 +13,28 @@ public class Tarefa {
     private Prioridade prioridade;
     private String codigo;
 
-    public Tarefa(String titulo, String descricao, String vencimento, String prioridade, String codigo) {
-        this.checkTituloECodigo(titulo, codigo);
-        this.checkPrioridade(prioridade);
-        this.checkVencimento(vencimento);
-        this.descricao = descricao;
-    }
-
     public Tarefa(String titulo, String descricao, String vencimento, String prioridade) {
-        double randomDoubleNumber = Math.random();
-        int randomIntNumber = (int) (randomDoubleNumber * 100);
-        String codigo = Integer.toString(randomIntNumber);
-        this.checkTituloECodigo(titulo, codigo);
+        this.checkEmpty("Titulo", titulo);
         this.checkPrioridade(prioridade);
         this.checkVencimento(vencimento);
         this.descricao = descricao;
+        this.titulo = titulo;
+        this.codigo = this.getRadomId();
+    }
+    public Tarefa(String titulo, String descricao, String vencimento, String prioridade, String codigo) {
+        this.checkEmpty("Titulo", titulo);
+        this.checkEmpty("Código", codigo);
+        this.checkPrioridade(prioridade);
+        this.checkVencimento(vencimento);
+        this.descricao = descricao;
+        this.titulo = titulo;
+        this.codigo = codigo;
     }
 
-    private void checkTituloECodigo(String titulo, String codigo) {
-        String mensagemTituloInvalido = "Titulo Invalido! Atribua um titulo para sua tarefa.";
-        String mensagemCodigoInvalido = "Codigo Invalido! Atribua um codigo para sua tarefa";
-        if(isEmpty(titulo)) {
-            alertaAtributoInvalido(mensagemTituloInvalido);
-        } else if(isEmpty(codigo)) {
-            alertaAtributoInvalido(mensagemCodigoInvalido);
-        } else {
-            this.titulo = titulo;
-            this.codigo = codigo;
+    private void checkEmpty(String atributo, String valor) {
+        String mensagem = atributo + " Invalido! Atribua um " + atributo.toLowerCase() + " para sua tarefa.";
+        if(isEmpty(valor)) {
+            alertaAtributoInvalido(mensagem);
         }
     }
 
@@ -63,6 +58,12 @@ public class Tarefa {
         if(resultado > 0) {
             alertaAtributoInvalido(mensagemDataInvalida);
         }
+    }
+
+    private String getRadomId() {
+        double randomDoubleNumber = Math.random();
+        int randomIntNumber = (int) (randomDoubleNumber * 100);
+        return Integer.toString(randomIntNumber);
     }
 
     private void getCorrespondentData(String vencimento) {
