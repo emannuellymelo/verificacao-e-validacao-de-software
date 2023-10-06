@@ -37,7 +37,7 @@ public class Fatura {
     }
 
     public boolean isPago(){
-        return this.status.equals("PAGA");
+        return this.getStatus().equals("PAGA");
     }
 
     public String getStatus(){
