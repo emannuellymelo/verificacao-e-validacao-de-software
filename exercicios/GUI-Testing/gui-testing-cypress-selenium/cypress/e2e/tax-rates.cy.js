@@ -73,6 +73,57 @@ describe('tax rates', () => {
     cy.get('#confirmation-button').click();
     cy.get('.loadable > a.ui').click();
     cy.get('.segment').should('not.contain', '5');
-  })
+  });
+
+  it('validate filter fields cleaning', () => {
+    cy.get('[id="criteria_search_value"]').type('5');
+    cy.get('#criteria_startDate_from_date').type('2023-10-01');
+    cy.get('#criteria_startDate_from_time').type('10:00');
+    cy.get('#criteria_endDate_from_date').type('2024-10-01');
+    cy.get('#criteria_endDate_from_time').type('10:00');
+    cy.get('.loadable > a.ui').click();
+    cy.get('[id="criteria_search_value"]').should('not.contain','5');
+    cy.get('#criteria_startDate_from_date').should('not.contain','2023-10-01');
+    cy.get('#criteria_startDate_from_time').should('not.contain','10:00');
+    cy.get('#criteria_endDate_from_date').should('not.contain','2024-10-01');
+    cy.get('#criteria_endDate_from_time').should('not.contain','10:00');
+  });
+
+  it('validate filtering inexistent tax rate', () => {
+    cy.get('[id="criteria_search_value"]').type('5');
+    cy.get('#criteria_startDate_from_date').type('2023-10-01');
+    cy.get('#criteria_startDate_from_time').type('10:00');
+    cy.get('#criteria_endDate_from_date').type('2024-10-01');
+    cy.get('#criteria_endDate_from_time').type('10:00');
+    cy.get('.blue').click();
+    cy.contains('There are no results to display'); 
+  });
+
+  it('validate creation with start date greater than end date', () => {
+    cy.get('.right > .ui').click();
+    cy.get('#sylius_tax_rate_code').type('clothing_new_tax');
+    cy.get('#sylius_tax_rate_name').type('Clothing New Tax 5%');
+    cy.get('#sylius_tax_rate_zone').select('United States of America');
+    cy.get('#sylius_tax_rate_startDate_date').type('2024-10-01');
+    cy.get('#sylius_tax_rate_startDate_time').type('10:00');
+    cy.get('#sylius_tax_rate_endDate_date').type('2023-10-01');
+    cy.get('#sylius_tax_rate_endDate_time').type('10:00');
+    cy.get('#sylius_tax_rate_amount').clear().type('5');
+    cy.get(':nth-child(4) > .ui > .required').click();
+    cy.get('.buttons > .labeled').click();
+    cy.get('.breadcrumb > [href="/admin/tax-rates/"]').click();
+    cy.get('tbody > :nth-child(1) > :nth-child(2)').should('not.contain', 'clothing_new_tax');
+  });
+
+  it('validate tax rate error message while creating a tax with negative amount', () => {
+    cy.get('.right > .ui').click();
+    cy.get('#sylius_tax_rate_code').type('clothing_new_tax');
+    cy.get('#sylius_tax_rate_name').type('Clothing New Tax 5%');
+    cy.get('#sylius_tax_rate_zone').select('United States of America');
+    cy.get('#sylius_tax_rate_amount').clear().type('-1');
+    cy.get(':nth-child(4) > .ui > .required').click();
+    cy.get('.buttons > .labeled').click();
+    cy.contains('The tax rate amount is invalid.'); 
+  });
   
 });

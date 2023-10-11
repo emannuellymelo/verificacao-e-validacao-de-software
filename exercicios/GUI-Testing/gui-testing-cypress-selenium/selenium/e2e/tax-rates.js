@@ -172,4 +172,167 @@ describe('tax rates', () => {
      assert(updatedBodyText.includes('sales_tax_20'));
   }).timeout(10000);
 
+  it('validate tax rates filtered by date', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    // Creating new tax for this test
+    await driver.findElement(By.css('.right > .ui')).click();
+    await driver.findElement(By.id('sylius_tax_rate_code')).sendKeys('clothing_new_tax');
+    await driver.findElement(By.id('sylius_tax_rate_name')).sendKeys('Clothing New Tax 5%');
+    await driver.findElement(By.id('sylius_tax_rate_zone')).sendKeys('United States of America');
+    await driver.findElement(By.id('sylius_tax_rate_startDate_date')).sendKeys('01-10-2023');
+    await driver.findElement(By.id('sylius_tax_rate_startDate_time')).sendKeys('10:00');
+    await driver.findElement(By.id('sylius_tax_rate_endDate_date')).sendKeys('01-10-2024');
+    await driver.findElement(By.id('sylius_tax_rate_endDate_time')).sendKeys('10:00');
+    await driver.findElement(By.id('sylius_tax_rate_amount')).clear();
+    await driver.findElement(By.id('sylius_tax_rate_amount')).sendKeys('5');
+    const createButtons = await driver.findElements(By.className('ui labeled icon primary button'));
+    await createButtons[createButtons.length-1].click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    // Adding filter by date
+    await driver.findElement(By.id('criteria_startDate_from_date')).sendKeys('01-10-2023');
+    await driver.findElement(By.id('criteria_startDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.id('criteria_endDate_from_date')).sendKeys('01-10-2024');
+    await driver.findElement(By.id('criteria_endDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.css('*[class^="ui blue labeled icon button"]')).click();
+
+    // Assert that only the new tax is shown
+    const bodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(bodyText.includes('clothing_new_tax'));
+    assert(!bodyText.includes('Sales Tax 20%'));
+    assert(!bodyText.includes('Clothing Sales Tax 7%'));
+    removeNewTaxRate()
+  }).timeout(20000);
+
+  it('validate tax rate list after filter cleaning', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+     // Type in value input to search for specify tax rate
+     await driver.findElement(By.id('criteria_search_value')).sendKeys('20');
+     await driver.findElement(By.css('*[class^="ui blue labeled icon button"]')).click();
+
+     // Cleaning filter by value
+     await driver.findElement(By.linkText('Clear filters')).click();
+
+     // Assert that all values are back to tax rates list
+     const updatedBodyText = await driver.findElement(By.tagName('body')).getText();
+     assert(updatedBodyText.includes('clothing_sales_tax_7'));
+     assert(updatedBodyText.includes('sales_tax_20'));
+  }).timeout(10000);
+
+  it('validate deletion of filtered tax rate', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    // Creating new tax for this test
+    await driver.findElement(By.css('.right > .ui')).click();
+    await driver.findElement(By.id('sylius_tax_rate_code')).sendKeys('clothing_new_tax');
+    await driver.findElement(By.id('sylius_tax_rate_name')).sendKeys('Clothing New Tax 5%');
+    await driver.findElement(By.id('sylius_tax_rate_zone')).sendKeys('United States of America');
+    await driver.findElement(By.id('sylius_tax_rate_amount')).clear();
+    await driver.findElement(By.id('sylius_tax_rate_amount')).sendKeys('5');
+    const createButtons = await driver.findElements(By.className('ui labeled icon primary button'));
+    await createButtons[createButtons.length-1].click();
+
+    // Go back to tax rates page
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    await driver.findElement(By.id('criteria_search_value')).sendKeys('5');
+    await driver.findElement(By.css('*[class^="ui blue labeled icon button"]')).click();
+    const deleteButtons = await driver.findElements(By.className('ui red labeled icon button'));
+    await deleteButtons[deleteButtons.length - 1].click();
+    await driver.findElement(By.id('confirmation-button')).click();
+
+    await driver.findElement(By.linkText('Clear filters')).click();
+    const updatedBodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(!updatedBodyText.includes('clothing_new_tax'));
+  }).timeout(20000);
+
+  it('validate filter fields cleaning', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    await driver.findElement(By.id('criteria_search_value')).sendKeys('5');
+    await driver.findElement(By.id('criteria_startDate_from_date')).sendKeys('01-10-2023');
+    await driver.findElement(By.id('criteria_startDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.id('criteria_endDate_from_date')).sendKeys('01-10-2024');
+    await driver.findElement(By.id('criteria_endDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.css('*[class^="ui blue labeled icon button"]')).click();
+    await driver.findElement(By.linkText('Clear filters')).click();
+    
+    const updatedBodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(!updatedBodyText.includes('01-10-2023'));
+    assert(!updatedBodyText.includes('10:00'));
+    assert(!updatedBodyText.includes('01-10-2024'));
+    assert(!updatedBodyText.includes('10:00'));
+    assert(!updatedBodyText.includes('5'));
+  }).timeout(20000);
+
+  it('validate filtering inexistent tax rate', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    await driver.findElement(By.id('criteria_search_value')).sendKeys('5');
+    await driver.findElement(By.id('criteria_startDate_from_date')).sendKeys('01-10-2023');
+    await driver.findElement(By.id('criteria_startDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.id('criteria_endDate_from_date')).sendKeys('01-10-2024');
+    await driver.findElement(By.id('criteria_endDate_from_time')).sendKeys('10:00');
+    await driver.findElement(By.css('*[class^="ui blue labeled icon button"]')).click();
+    
+    const updatedBodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(updatedBodyText.includes('There are no results to display'));
+    
+  }).timeout(20000);
+
+  it('validate creation with start date greater than end date', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    // Creating new tax for this test
+    await driver.findElement(By.css('.right > .ui')).click();
+    await driver.findElement(By.id('sylius_tax_rate_code')).sendKeys('clothing_new_tax');
+    await driver.findElement(By.id('sylius_tax_rate_name')).sendKeys('Clothing New Tax 5%');
+    await driver.findElement(By.id('sylius_tax_rate_zone')).sendKeys('United States of America');
+    await driver.findElement(By.id('sylius_tax_rate_startDate_date')).sendKeys('01-10-2024');
+    await driver.findElement(By.id('sylius_tax_rate_startDate_time')).sendKeys('10:00');
+    await driver.findElement(By.id('sylius_tax_rate_endDate_date')).sendKeys('01-10-2023');
+    await driver.findElement(By.id('sylius_tax_rate_endDate_time')).sendKeys('10:00');
+    await driver.findElement(By.id('sylius_tax_rate_amount')).clear();
+    await driver.findElement(By.id('sylius_tax_rate_amount')).sendKeys('5');
+    const createButtons = await driver.findElements(By.className('ui labeled icon primary button'));
+    await createButtons[createButtons.length-1].click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+    
+    // Assert new tax on tax rates list
+    const bodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(!bodyText.includes('clothing_new_tax'));
+  }).timeout(20000);
+
+  it('validate tax rate error message while creating a tax with negative amount', async () => {
+    await driver.findElement(By.css('.primary')).click();
+    await driver.findElement(By.linkText('Tax rates')).click();
+
+    // Click on create new tax button
+    await driver.findElement(By.css('.right > .ui')).click();
+
+    // Fill input fields
+    await driver.findElement(By.id('sylius_tax_rate_code')).sendKeys('clothing_new_tax');
+    await driver.findElement(By.id('sylius_tax_rate_name')).sendKeys('Clothing New Tax 5%');
+    await driver.findElement(By.id('sylius_tax_rate_zone')).sendKeys('United States of America');
+    await driver.findElement(By.id('sylius_tax_rate_amount')).clear();
+    await driver.findElement(By.id('sylius_tax_rate_amount')).sendKeys('-5');
+
+    // Click on create
+    const createButtons = await driver.findElements(By.className('ui labeled icon primary button'));
+    await createButtons[createButtons.length - 1].click();
+
+    // Assert new tax on tax rates list
+    const bodyText = await driver.findElement(By.tagName('body')).getText();
+    assert(bodyText.includes('The tax rate amount is invalid.'));
+  
+  }).timeout(20000);
+
 });
