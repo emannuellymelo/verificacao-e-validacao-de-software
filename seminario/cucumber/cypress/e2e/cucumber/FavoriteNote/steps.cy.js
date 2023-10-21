@@ -1,17 +1,5 @@
 import {Given, When, Then} from "cypress-cucumber-preprocessor/steps"
 
-Given(/^que eu acesso o site da aplicacao TakeNote$/, () => {
-	cy.visit("https://takenote.dev/app")
-});
-
-When(/^clico em criar uma nota$/, () => {
-    cy.get('[data-testid="sidebar-action-create-new-note"]').click();
-});
-
-When(/^digito "([^"]*)"$/, (args1) => {
-	cy.get('.CodeMirror-line').type(args1);
-});
-
 When(/^clico nas opções da nota (\d+)$/, (num) => {
     cy.get(`[data-testid="note-options-div-${num}"]`).click();
 });
