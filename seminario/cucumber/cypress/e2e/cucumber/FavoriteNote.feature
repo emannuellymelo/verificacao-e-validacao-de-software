@@ -11,18 +11,10 @@ Background:
     And clico na opção de favoritos
     And vou para a aba de favoritos
 
-Scenario Outline: Adicionar uma nota aos favoritos
-    Then minha nota "<note>" deve estar exibida na listagem de favoritos
+Scenario: Adicionar uma nota aos favoritos
+    Then minha nota "Minha Nota" deve estar exibida na listagem de favoritos
 
-Examples:
- | note     |
- | Minha Nota |
-
-Scenario Outline: Adicionar e remover uma nota dos favoritos
+Scenario: Adicionar e remover uma nota dos favoritos
     And clico nas opções da primeira nota
     And clico na opção de favoritos
-    Then minha nota "<note>" não deve estar exibida na listagem de favoritos
-
-Examples:
- | note     |
- | Minha Nota |
+    Then minha nota "Minha Nota" não deve estar exibida na listagem de favoritos
