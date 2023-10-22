@@ -3,13 +3,15 @@ Feature: FavoriteNote
     Como usuario, desejo poder adicionar ou remover uma nota na lista de favoritos
     e poder visualizar as notas favoritadas.
 
-Scenario Outline: Adicionar uma nota aos favoritos
+Background:
     Given que eu acesso o site da aplicacao TakeNote
     And clico em criar uma nota
-    When digito "<note>"
+    And digito "Minha Nota"
     And clico nas opções da primeira nota
     And clico na opção de favoritos
     And vou para a aba de favoritos
+
+Scenario Outline: Adicionar uma nota aos favoritos
     Then minha nota "<note>" deve estar exibida na listagem de favoritos
 
 Examples:
@@ -17,16 +19,10 @@ Examples:
  | Minha Nota |
 
 Scenario Outline: Adicionar e remover uma nota dos favoritos
-    Given que eu acesso o site da aplicacao TakeNote
-    And clico em criar uma nota
-    When digito "<note>"
     And clico nas opções da primeira nota
     And clico na opção de favoritos
-    And vou para a aba de favoritos
-    And clico nas opções da primeira nota
-    And clico na opção de favoritos
-    Then minha nota "<note>" vai estar "<presenca>" na listagem de favoritos
+    Then minha nota "<note>" não deve estar exibida na listagem de favoritos
 
 Examples:
- | note     | presenca |
- | Minha Nota | ausente |
+ | note     |
+ | Minha Nota |

@@ -16,12 +16,8 @@ Then(/^minha nota "([^"]*)" deve estar exibida na listagem de favoritos$/, (args
 	cy.get('[data-testid="note-list"]').should('contain', args1);
 });
 
-Then(/^minha nota "([^"]*)" vai estar "([^"]*)" na listagem de favoritos$/, (args1, args2) => {
-	if(args2 == 'presente') {
-        cy.get('[data-testid="note-list"]').should('contain', args1);
-    } else {
-        cy.get('[data-testid="note-list"]').should('not.contain', args1);
-    }
+Then(/^minha nota "([^"]*)" não deve estar exibida na listagem de favoritos$/, (args1) => {
+    cy.get('[data-testid="note-list"]').should('not.contain', args1);
 });
 
 
