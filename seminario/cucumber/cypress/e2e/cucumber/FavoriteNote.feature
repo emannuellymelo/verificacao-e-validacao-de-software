@@ -7,9 +7,9 @@ Scenario Outline: Adicionar uma nota aos favoritos
     Given que eu acesso o site da aplicacao TakeNote
     And clico em criar uma nota
     When digito "<note>"
-    And clico nas opções da nota 0
+    And clico nas opções da primeira nota
     And clico na opção de favoritos
-    And verifico a lista de favoritos
+    And vou para a aba de favoritos
     Then minha nota "<note>" deve estar exibida na listagem de favoritos
 
 Examples:
@@ -20,10 +20,10 @@ Scenario Outline: Adicionar e remover uma nota dos favoritos
     Given que eu acesso o site da aplicacao TakeNote
     And clico em criar uma nota
     When digito "<note>"
-    And clico nas opções da nota 0
+    And clico nas opções da primeira nota
     And clico na opção de favoritos
-    And verifico a lista de favoritos
-    And clico nas opções da nota 0
+    And vou para a aba de favoritos
+    And clico nas opções da primeira nota
     And clico na opção de favoritos
     Then minha nota "<note>" vai estar "<presenca>" na listagem de favoritos
 

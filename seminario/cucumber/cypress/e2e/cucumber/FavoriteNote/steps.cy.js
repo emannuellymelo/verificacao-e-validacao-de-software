@@ -1,14 +1,14 @@
 import {Given, When, Then} from "cypress-cucumber-preprocessor/steps"
 
-When(/^clico nas opções da nota (\d+)$/, (num) => {
-    cy.get(`[data-testid="note-options-div-${num}"]`).click();
+When(/^clico nas opções da primeira nota$/, (num) => {
+    cy.get(`[data-testid="note-options-div-0"]`).click();
 });
 
 When(/^clico na opção de favoritos$/, () => {
     cy.get(`[data-testid="note-option-favorite"]`).click();
 });
 
-When(/^verifico a lista de favoritos$/, () => {
+When(/^vou para a aba de favoritos$/, () => {
     cy.get(`[data-testid="favorites"]`).click();
 });
 
